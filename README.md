@@ -1,4 +1,4 @@
-# Bookshelf-Adamis
+# Bookshelf
 A ReactJS sample project of a Bookshelf;
 
 
