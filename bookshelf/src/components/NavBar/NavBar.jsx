@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import "./navbar.css";
+import "./NavBar.css";
 import logo from './elite_store_logo_oficial.svg';
 import CartWidget from './cartwidget.jsx';
 
