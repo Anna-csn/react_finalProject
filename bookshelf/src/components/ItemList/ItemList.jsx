@@ -1,14 +1,17 @@
 import './../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Item from '../Item/Item'
 
 function ItemList({ theme = 'dark' }) {
 
-    const [items, setItems] = useState([]);
+    const { id } = useParams();
 
-    useEffect(() => {
-        const fetch = async () => {
-            await setTimeout(() => {
+    const [book, setBook] = useState(null);
+
+    const getBook = async (id) => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
                 const mockedBooks = [
                     {
                         id: 1,
@@ -39,21 +42,24 @@ function ItemList({ theme = 'dark' }) {
                         pictureUrl: "https://static.todamateria.com.br/upload/sa/pi/sapiensumabrevehistoriadahumanidade-cke.jpg",
                     }
                 ];
-
-                setItems(mockedBooks);
+                const selectedBook = mockedBooks.find(book => book.id === Number(id));
+                resolve(selectedBook);
             }, 2000);
-        };
+        });
+    };
 
-        fetch();
-    }, []);
+    useEffect(() => {
+        const promise = async () => {
+            const result = await getBook(id);
+            setBook(result);
+        };
+        promise();
+
+    }, [id]);
 
     return (
         <div className='d-flex'>
-            {items.map((item) => {
-                return <div>
-                            <Item id={item.id} title={item.title} description={item.description} price={item.price} pictureUrl={item.pictureUrl} theme={theme} />
-                        </div>
-            })}
+            <Item id={book?.id} title={book?.title} description={book?.description} price={book?.price} pictureUrl={book?.pictureUrl} theme={theme} />
         </div>
     );
 }
